@@ -1,0 +1,5 @@
+{
+  "presets": ["es2015"],
+  "plugins": ["add-module-exports"],
+  "only": ["src/dom-observer.js", "test/dom-observer-spec.js"]
+}

@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+test
+.gitattributes
+.gitignore
+.editorconfig
+circle.yml
+Gruntfile.js
