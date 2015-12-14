@@ -1,0 +1,29 @@
+{
+  "name": "dom-observer",
+  "version": "0.1.0",
+  "authors": [
+    "Matheus Kautzmann <matheus@fluidrobot.com>"
+  ],
+  "description": "An abstraction for Mutation Observer with some extra features",
+  "main": [
+    "dist/dom-observer.min.js"
+  ],
+  "keywords": [
+    "mutation observer",
+    "dom",
+    "observer",
+    "browser",
+    "browserify"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/leafui/dom-observer",
+  "ignore": [
+    "**/.*",
+    "CONTRIBUTING.md",
+    "Gruntfile.js",
+    "node_modules",
+    "circle.yml",
+    "package.json",
+    "test"
+  ]
+}
