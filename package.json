@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/leafui/dom-observer/issues"
   },
-  "license": "MIT",
+  "license": "MIT LICENSE",
   "main": "dist/dom-observer.min.js",
   "scripts": {
     "test": "grunt test"
