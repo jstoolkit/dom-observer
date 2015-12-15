@@ -80,11 +80,15 @@ module.exports = function (grunt) {
           'dist/dom-observer.min.js': 'dist/dom-observer.min.js'
         }
       }
-    }
+    },
 
     // TODO: GENERATE DOCS WITH JSDOC
-
-
+    jsdoc: {
+      dist: {
+        src: ['README.md', 'src/*.js'],
+        dest: 'docs'
+      }
+    }
   });
 
   // Register custom tasks
