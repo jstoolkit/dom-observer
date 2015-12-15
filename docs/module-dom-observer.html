@@ -67,7 +67,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -92,7 +96,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The element to observe</td>
@@ -115,7 +131,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The object with the observer config</td>
@@ -131,14 +159,26 @@
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="global.html#changeCallback">changeCallback</a></span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The function that will receive the reports</td>
@@ -161,7 +201,23 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last">Whether or not to return only the last change</td>
@@ -202,16 +258,13 @@
     
 
     
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>MIT LICENSE</li></ul></dd>
-    
 
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line30">line 30</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -234,6 +287,14 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Instantiates an observer for all elements in body</p>
+    
+    <pre class="prettyprint"><code>var observer = require('dom-observer');
+var myObserver = observer(document.body, { subtree: true }, myCallback);</code></pre>
 
 
 
@@ -313,7 +374,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line62">line 62</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -378,7 +439,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line87">line 87</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -508,7 +569,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line98">line 98</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -553,6 +614,14 @@
 </dl>
 
     
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Add a new element to an existent observer</p>
+    
+    <pre class="prettyprint"><code>var myElement = document.querySelector('#awesomeElement');
+myObserver.addTarget(myElement);</code></pre>
 
 
 
@@ -687,7 +756,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line111">line 111</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -734,13 +803,21 @@
     
 
 
+    <h5>Example</h5>
+    
+        <p class="code-caption">Add a new element and config to an observer</p>
+    
+    <pre class="prettyprint"><code>var myElement = document.querySelector('#awesomeElement');
+myObserver.andObserve(myElement, { childList: true });</code></pre>
+
+
 
         
             
 
     
 
-    <h4 class="name" id="~changeCallback"><span class="type-signature">(inner) </span>changeCallback<span class="signature">(fn)</span><span class="type-signature"> &rarr; {DomObserver}</span></h4>
+    <h4 class="name" id="~changeCallback"><span class="type-signature">(inner) </span>changeCallback<span class="signature">(fn)</span><span class="type-signature"> &rarr; {DomObserver|DomObserver}</span></h4>
 
     
 
@@ -843,7 +920,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line123">line 123</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -867,8 +944,8 @@
 
 
 <h5>Returns:</h5>
-
-        
+<ul>
+        <li>
 <div class="param-desc">
     self - The current instance of dom-observer
 </div>
@@ -886,8 +963,36 @@
 
     </dd>
 </dl>
-
+</li>
     
+        <li>
+<div class="param-desc">
+    self - The current instance of dom-observer
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">DomObserver</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Change the function that handle the changes</p>
+    
+    <pre class="prettyprint"><code>var myNewFunc = function(mutations) { console.log('YAY', mutations); }
+myObserver.changeCallback(myNewFunc);</code></pre>
 
 
 
@@ -999,7 +1104,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line47">line 47</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -1156,7 +1261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line72">line 72</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -1241,7 +1346,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line153">line 153</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -1286,6 +1391,13 @@
 </dl>
 
     
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Stopping all reporters</p>
+    
+    <pre class="prettyprint"><code>myObserver.disconnect(); // No more change reports</code></pre>
 
 
 
@@ -1348,7 +1460,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line134">line 134</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -1393,6 +1505,13 @@
 </dl>
 
     
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Taking records</p>
+    
+    <pre class="prettyprint"><code>myObserver.takeRecords(); // Now do something with the info.</code></pre>
 
 
 
@@ -1455,7 +1574,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line142">line 142</a>
+        <a href="dom-observer.js.html">dom-observer.js</a>, <a href="dom-observer.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -1502,6 +1621,13 @@
     
 
 
+    <h5>Example</h5>
+    
+        <p class="code-caption">Wiping the reports</p>
+    
+    <pre class="prettyprint"><code>myObserver.wipe(); // OK, clean.</code></pre>
+
+
 
         
     
@@ -1525,7 +1651,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Dec 15 2015 09:47:14 GMT-0200 (BRST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Dec 15 2015 15:10:40 GMT-0200 (BRST)
 </footer>
 
 <script> prettyPrint(); </script>

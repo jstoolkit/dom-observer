@@ -16,16 +16,25 @@
  * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
  */
 
+ /**
+  * The callback used to report mutations
+  * @callback changeCallback
+  * @param {MutationRecord[]|MutationRecord} mutations - Report array of changes, but if lastChange is set to true it will report only the last change.
+  * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
+  */
+
 /**
  * Instantiate dom-observer
  * @param {HTMLElement} target - The element to observe
  * @param {MutationObserverInit} options - The object with the observer config
- * @param {Function} callback - The function that will receive the reports
- * @param {Boolean} lastChange - Whether or not to return only the last change
+ * @param {changeCallback} callback - The function that will receive the reports
+ * @param {Boolean} [lastChange=false] - Whether or not to return only the last change
  * @access public
  * @exports dom-observer
+ * @example <caption>Instantiates an observer for all elements in body</caption>
+ * var observer = require('dom-observer');
+ * var myObserver = observer(document.body, { subtree: true }, myCallback);
  * @since 0.1.0
- * @license MIT LICENSE
  */
 export default (target, options, callback, lastChange) => {
   // Bring prefixed MutationObserver for older Chrome/Safari and Firefox
@@ -92,6 +101,9 @@ export default (target, options, callback, lastChange) => {
        * @function
        * @param {HTMLElement} _target - The element to observe
        * @returns {DomObserver} self - The current instance of dom-observer
+       * @example <caption>Add a new element to an existent observer</caption>
+       * var myElement = document.querySelector('#awesomeElement');
+       * myObserver.addTarget(myElement);
        * @access public
        * @since 0.1.0
        */
@@ -104,6 +116,9 @@ export default (target, options, callback, lastChange) => {
        * @function
        * @param {HTMLElement} _target - The element to observe
        * @param {MutationObserverInit} _options - The config to respect
+       * @example <caption>Add a new element and config to an observer</caption>
+       * var myElement = document.querySelector('#awesomeElement');
+       * myObserver.andObserve(myElement, { childList: true });
        * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
        * @since 0.1.0
@@ -117,6 +132,10 @@ export default (target, options, callback, lastChange) => {
        * @function
        * @param {Function} fn - The new callback to use
        * @returns {DomObserver} self - The current instance of dom-observer
+       * @example <caption>Change the function that handle the changes</caption>
+       * var myNewFunc = function(mutations) { console.log('YAY', mutations); }
+       * myObserver.changeCallback(myNewFunc);
+       * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
        * @since 0.1.0
        */
@@ -128,6 +147,8 @@ export default (target, options, callback, lastChange) => {
        * Expose MutationObserver's takeRecords method
        * @function
        * @returns {MutationRecord[]} The array of mutations
+       * @example <caption>Taking records</caption>
+       * myObserver.takeRecords(); // Now do something with the info.
        * @access public
        * @since 0.1.0
        */
@@ -136,6 +157,8 @@ export default (target, options, callback, lastChange) => {
        * Clean the MutationObserver record pool and return this instance
        * @function
        * @returns {DomObserver} self - The current instance of dom-observer
+       * @example <caption>Wiping the reports</caption>
+       * myObserver.wipe(); // OK, clean.
        * @access public
        * @since 0.1.0
        */
@@ -147,7 +170,9 @@ export default (target, options, callback, lastChange) => {
        * Remove all previous observer configuration
        * @function
        * @returns {DomObserver} self - The current instance of dom-observer
-       * @access public
+       * @example <caption>Stopping all reporters</caption>
+       * myObserver.disconnect(); // No more change reports
+       * @access publics
        * @since 0.1.0
        */
       removeAllTargets: () => {
