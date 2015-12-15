@@ -1,5 +1,6 @@
 {
   "sauceLabs": true,
+  "sauceJobName": "dom-observer",
   "BUILD_VAR": "CIRCLE_BUILD_NUM",
   "asyncPolling": false,
   "browsers": [
