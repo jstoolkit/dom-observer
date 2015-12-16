@@ -172,7 +172,7 @@ export default (target, options, callback, lastChange) => {
        * @returns {DomObserver} self - The current instance of dom-observer
        * @example <caption>Stopping all reporters</caption>
        * myObserver.disconnect(); // No more change reports
-       * @access publics
+       * @access public
        * @since 0.1.0
        */
       removeAllTargets: () => {
