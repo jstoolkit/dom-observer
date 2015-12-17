@@ -1,8 +1,8 @@
 // PhantomJS prior to 2.0 doesn't support MutationObserver
 import MutationObserverShim from 'mutationobserver-shim';
 import { expect } from 'chai';
-import observer from '../src/dom-observer.js';
 import sinon from 'sinon';
+import observer from '../src/dom-observer.js';
 
 let myObserver;
 let myElement;
@@ -23,7 +23,7 @@ describe('dom-observer', function test() {
   });
   describe('API', () => {
     beforeEach(() => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy);
     });
 
     it('should expose addTarget', () => {
@@ -58,7 +58,7 @@ describe('dom-observer', function test() {
   describe('observer', () => {
     describe('initialization', () => {
       it('should start observing and reporting when instantiated', (done) => {
-        myObserver = observer(myElement, { attributes: true }, mySpy, false);
+        myObserver = observer(myElement, mySpy, { attributes: true });
         document.body.setAttribute('test', 'test');
         setTimeout(() => {
           if (mySpy.calledOnce) {
@@ -71,15 +71,27 @@ describe('dom-observer', function test() {
 
       it('should not accept initiating without a target', () => {
         const createObserver = () => {
-          return observer(false, { attributes: true }, mySpy, false);
+          return observer(false, mySpy, { attributes: true });
         };
         expect(createObserver).to.throw(Error);
+      });
+
+      it('should spy all changes when no specific one was stated', (done) => {
+        myObserver = observer(myElement, mySpy);
+        document.body.setAttribute('test', 'testing');
+        setTimeout(() => {
+          if (mySpy.calledOnce) {
+            done();
+          } else {
+            throw new Error('Must report changes');
+          }
+        }, 100);
       });
     });
 
     describe('changes', () => {
       it('should bundle quick changes', (done) => {
-        myObserver = observer(myElement, { attributes: true }, mySpy, false);
+        myObserver = observer(myElement, mySpy, { attributes: true });
         document.body.setAttribute('test', 'test');
         document.body.setAttribute('test', 'test2');
         setTimeout(() => {
@@ -92,7 +104,7 @@ describe('dom-observer', function test() {
       });
 
       it('should detect changes on attributes', (done) => {
-        myObserver = observer(myElement, { attributes: true }, mySpy, false);
+        myObserver = observer(myElement, mySpy, { attributes: true });
         document.body.setAttribute('test', 'test');
         setTimeout(() => {
           if (mySpy.args[0][0][0].type === 'attributes') {
@@ -104,7 +116,7 @@ describe('dom-observer', function test() {
       });
 
       it('should detect changes on childList', (done) => {
-        myObserver = observer(myElement, { childList: true }, mySpy, false);
+        myObserver = observer(myElement, mySpy, { childList: true });
         document.body.appendChild(document.createElement('h1'));
         setTimeout(() => {
           if (mySpy.args[0][0][0].type === 'childList') {
@@ -116,11 +128,11 @@ describe('dom-observer', function test() {
       });
 
       it('should detect changes on characterData', (done) => {
-        myObserver = observer(myElement, {
+        myObserver = observer(myElement, mySpy, {
           childList: true,
           characterData: true,
           subtree: true,
-        }, mySpy, false);
+        });
         textNode.textContent = 'change';
         setTimeout(() => {
           if (mySpy.args[0][0][0].type === 'characterData') {
@@ -134,7 +146,7 @@ describe('dom-observer', function test() {
 
     describe('property observing', () => {
       it('should not report changes unrelated to the one specified', (done) => {
-        myObserver = observer(myElement, { attributes: true }, mySpy, false);
+        myObserver = observer(myElement, mySpy, { attributes: true });
         document.body.appendChild(document.createElement('h1'));
         setTimeout(() => {
           if (!mySpy.called) {
@@ -146,10 +158,10 @@ describe('dom-observer', function test() {
       });
 
       it('should report the final change when lastChange is truthy', (done) => {
-        myObserver = observer(myElement, {
+        myObserver = observer(myElement, mySpy, {
           attributes: true,
           childList: true,
-        }, mySpy, true);
+        }, true);
         document.body.setAttribute('test', 'test');
         document.body.appendChild(document.createElement('h1'));
         setTimeout(() => {
@@ -165,7 +177,7 @@ describe('dom-observer', function test() {
 
   describe('addTarget', () => {
     it('must require a valid HTMLElement', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       const registerTarget = () => {
         myObserver.addTarget(false);
       };
@@ -173,13 +185,13 @@ describe('dom-observer', function test() {
     });
 
     it('should return self', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       expect(myObserver.addTarget(document.querySelector('div')))
         .to.be.equal(myObserver);
     });
 
     it('should report changes releated to the new target', (done) => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       const myNewTarget = document.querySelector('div');
       myObserver.addTarget(myNewTarget);
       myNewTarget.setAttribute('test', 'test');
@@ -195,7 +207,7 @@ describe('dom-observer', function test() {
 
   describe('andObserve', () => {
     it('must require a valid HTMLElement', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       const registerTarget = () => {
         myObserver.andObserve(false, {});
       };
@@ -203,14 +215,14 @@ describe('dom-observer', function test() {
     });
 
     it('should return self', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       expect(myObserver.andObserve(document.querySelector('div'), {
         childList: true,
       })).to.be.equal(myObserver);
     });
 
     it('should report changes releated to the new observer', (done) => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       const myNewTarget = document.querySelector('div');
       myObserver.andObserve(myNewTarget, { childList: true });
       myNewTarget.appendChild(document.createElement('h1'));
@@ -226,13 +238,13 @@ describe('dom-observer', function test() {
 
   describe('changeCallback', () => {
     it('should return self', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       expect(myObserver.changeCallback(() => {})).to.be.equal(myObserver);
     });
 
     it('should report changes to the new callback', (done) => {
       const testFunc = () => { return; };
-      myObserver = observer(myElement, { attributes: true }, testFunc, false);
+      myObserver = observer(myElement, testFunc, { attributes: true });
       myObserver.changeCallback(mySpy);
       document.body.setAttribute('test', 'test2');
       setTimeout(() => {
@@ -247,10 +259,10 @@ describe('dom-observer', function test() {
 
   describe('takeRecords', () => {
     it('should return the records in store', () => {
-      myObserver = observer(myElement, {
+      myObserver = observer(myElement, mySpy, {
         attributes: true,
         childList: true,
-      }, mySpy, false);
+      });
       document.body.setAttribute('test', 'test3');
       document.body.appendChild(document.createElement('div'));
       expect(myObserver.takeRecords().length).to.eql(2);
@@ -259,15 +271,15 @@ describe('dom-observer', function test() {
 
   describe('wipe', () => {
     it('should return self', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       expect(myObserver.wipe()).to.be.equal(myObserver);
     });
 
     it('should clean the record list', () => {
-      myObserver = observer(myElement, {
+      myObserver = observer(myElement, mySpy, {
         attributes: true,
         childList: true,
-      }, mySpy, false);
+      });
       document.body.setAttribute('test', 'test3');
       document.body.appendChild(document.createElement('div'));
       myObserver.wipe();
@@ -277,15 +289,15 @@ describe('dom-observer', function test() {
 
   describe('disconnect', () => {
     it('should return self', () => {
-      myObserver = observer(myElement, { attributes: true }, mySpy, false);
+      myObserver = observer(myElement, mySpy, { attributes: true });
       expect(myObserver.disconnect()).to.be.equal(myObserver);
     });
 
     it('should stop reporting changes after disconnect', () => {
-      myObserver = observer(myElement, {
+      myObserver = observer(myElement, mySpy, {
         attributes: true,
         childList: true,
-      }, mySpy, false);
+      });
       myObserver.disconnect();
       document.body.setAttribute('test', 'test3');
       document.body.appendChild(document.createElement('div'));

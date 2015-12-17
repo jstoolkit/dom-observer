@@ -26,8 +26,8 @@
 /**
  * Instantiate dom-observer
  * @param {HTMLElement} target - The element to observe
- * @param {MutationObserverInit} options - The object with the observer config
  * @param {changeCallback} callback - The function that will receive the reports
+ * @param {MutationObserverInit} [options] - The object with the observer config
  * @param {Boolean} [lastChange=false] - Whether or not to return only the last change
  * @access public
  * @exports dom-observer
@@ -36,13 +36,12 @@
  * var myObserver = observer(document.body, { subtree: true }, myCallback);
  * @since 0.1.0
  */
-export default (target, options, callback, lastChange) => {
+export default (target, callback, options, lastChange) => {
   // Bring prefixed MutationObserver for older Chrome/Safari and Firefox
-  // TODO: REMOVE THIS IF BLOCK WHEN POSSIBLE
-  if (!window.MutationObserver) {
-    window.MutationObserver =
-      window.webkitMutationObserver || window.mozMutationObserver;
-  }
+  // TODO: REMOVE THIS VARIABLE WHEN POSSIBLE
+  const MutationObserver = window.MutationObserver ||
+                           window.WebKitMutationObserver ||
+                           window.MozMutationObserver;
 
   let _callback = callback;
 
@@ -82,16 +81,23 @@ export default (target, options, callback, lastChange) => {
    * Spawn a new observer with the specified config
    * @function
    * @param {HTMLElement} _target - The element to observe
-   * @param {MutationObserverInit} options - The config to respect
+   * @param {MutationObserverInit} [options] - The config to respect
    * @access private
    * @since 0.1.0
    */
   function observe(_target, _options) {
+    const config = _options || {};
+    const { attributes, childList, characterData } = config;
+    if (!(attributes || childList || characterData)) {
+      config.attributes = true;
+      config.childList = true;
+      config.characterData = true;
+    }
     if (!(_target instanceof HTMLElement)) {
       throw new Error('You must set a target element!');
     }
     if (callback) {
-      observer.observe(_target, _options);
+      observer.observe(_target, config);
     }
   }
 
