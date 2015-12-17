@@ -82,7 +82,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // TODO: GENERATE DOCS WITH JSDOC
     jsdoc: {
       dist: {
         src: ['README.md', 'src/*.js'],
