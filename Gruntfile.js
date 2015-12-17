@@ -101,7 +101,8 @@ module.exports = function (grunt) {
     'test',
     'compile',
     'minify',
-    'usebanner'
+    'usebanner',
+    'jsdoc'
   ]);
 
   if (process.env.CI) {
