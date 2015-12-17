@@ -33,6 +33,7 @@
  * @exports dom-observer
  * @example <caption>Instantiates an observer for all elements in body</caption>
  * var observer = require('dom-observer');
+ * @returns {DomObserver} self - The newly created instance of DomObserver
  * var myObserver = observer(document.body, { subtree: true }, myCallback);
  * @since 0.1.0
  */
@@ -114,10 +115,10 @@ export default (target, callback, options, lastChange) => {
        * Add a target to the current observer
        * @function
        * @param {HTMLElement} _target - The element to observe
-       * @returns {DomObserver} self - The current instance of dom-observer
        * @example <caption>Add a new element to an existent observer</caption>
        * var myElement = document.querySelector('#awesomeElement');
        * myObserver.addTarget(myElement);
+       * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
        * @since 0.1.0
        */
@@ -160,9 +161,9 @@ export default (target, callback, options, lastChange) => {
       /**
        * Expose MutationObserver's takeRecords method
        * @function
-       * @returns {MutationRecord[]} The array of mutations
        * @example <caption>Taking records</caption>
        * myObserver.takeRecords(); // Now do something with the info.
+       * @returns {MutationRecord[]} The array of mutations
        * @access public
        * @since 0.1.0
        */
@@ -170,9 +171,9 @@ export default (target, callback, options, lastChange) => {
       /**
        * Clean the MutationObserver record pool and return this instance
        * @function
-       * @returns {DomObserver} self - The current instance of dom-observer
        * @example <caption>Wiping the reports</caption>
        * myObserver.wipe(); // OK, clean.
+       * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
        * @since 0.1.0
        */
@@ -183,9 +184,9 @@ export default (target, callback, options, lastChange) => {
       /**
        * Remove all previous observer configuration
        * @function
-       * @returns {DomObserver} self - The current instance of dom-observer
        * @example <caption>Stopping all reporters</caption>
        * myObserver.disconnect(); // No more change reports
+       * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
        * @since 0.1.0
        */
