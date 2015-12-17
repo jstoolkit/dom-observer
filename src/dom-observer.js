@@ -46,6 +46,14 @@ export default (target, options, callback, lastChange) => {
 
   let _callback = callback;
 
+  function getCallback() {
+    return _callback;
+  }
+
+  function setCallback(fn) {
+    _callback = fn;
+  }
+
   /**
    * Handle MutationObserver mutations
    * @function
@@ -53,13 +61,13 @@ export default (target, options, callback, lastChange) => {
    * @access private
    * @since 0.1.0
    */
-  const mutationHandler = (mutations) => {
+  function mutationHandler(mutations) {
     if (lastChange) {
-      _callback(mutations.pop());
+      getCallback()(mutations.pop());
     } else {
-      _callback(mutations);
+      getCallback()(mutations);
     }
-  };
+  }
 
   /**
    * The inner MutationObserver used to watch for mutations
@@ -140,7 +148,7 @@ export default (target, options, callback, lastChange) => {
        * @since 0.1.0
        */
       changeCallback: (fn) => {
-        _callback = fn;
+        setCallback(fn);
         return self;
       },
       /**
@@ -152,7 +160,7 @@ export default (target, options, callback, lastChange) => {
        * @access public
        * @since 0.1.0
        */
-      takeRecords: () => { observer.takeRecords(); },
+      takeRecords: () => { return observer.takeRecords(); },
       /**
        * Clean the MutationObserver record pool and return this instance
        * @function
@@ -175,7 +183,7 @@ export default (target, options, callback, lastChange) => {
        * @access public
        * @since 0.1.0
        */
-      removeAllTargets: () => {
+      disconnect: () => {
         observer.disconnect();
         return self;
       },
