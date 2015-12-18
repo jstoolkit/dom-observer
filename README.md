@@ -1,5 +1,10 @@
 # dom-observer
 
+[![Build]](https://circleci.com/gh/leafui/dom-observer/tree/master) [![SemVer]](http://semver.org/)
+[![License]](LICENSE)
+
+[![Tests](https://saucelabs.com/browser-matrix/leafui.svg)](https://saucelabs.com/u/leafui)
+
 An abstraction for [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) with some extra features in ~1kb gzipped.
 
 Useful to observe an DOM element for changes without taking too much hit on performance, the [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) technique is used by many libraries and frameworks.
@@ -146,3 +151,7 @@ As of now please check the `docs` folder. It works best if you clone the project
 ## License
 
 [MIT License](LICENSE)
+
+[Build]: https://img.shields.io/circleci/project/leafui/dom-observer/master.svg
+[SemVer]: https://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
+[License]: https://img.shields.io/github/license/leafui/dom-observer.svg
