@@ -1,8 +1,14 @@
 .DS_Store
 Thumbs.db
 test
+docs
+demo
 .gitattributes
 .gitignore
 .editorconfig
+.eslintrc
+.babelrc
+.min-wd
+banner.txt
 circle.yml
 Gruntfile.js

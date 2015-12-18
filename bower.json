@@ -24,6 +24,8 @@
     "node_modules",
     "circle.yml",
     "package.json",
-    "test"
+    "test",
+    "docs",
+    "demo"
   ]
 }
