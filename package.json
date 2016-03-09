@@ -1,7 +1,7 @@
 {
   "name": "dom-observer",
   "description": "An abstraction for Mutation Observer with some extra features",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/leafui/dom-observer",
   "author": {
     "name": "Matheus R. Kautzmann",
@@ -15,7 +15,7 @@
     "url": "https://github.com/leafui/dom-observer/issues"
   },
   "license": "MIT",
-  "main": "dist/dom-observer.min.js",
+  "main": "dist/dom-observer.js",
   "scripts": {
     "test": "grunt test"
   },
