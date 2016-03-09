@@ -19,15 +19,24 @@ module.exports = function (grunt) {
 
     // Perform browserify build
     browserify: {
-      lib: {
+      standalone: {
         files: {
-          'dist/dom-observer.js': ['src/*.js']
+          'dist/dom-observer.min.js': ['src/*.js']
         },
         options: {
           transform: ['babelify'],
           browserifyOptions: {
             standalone: 'DomObserver'
           }
+        }
+      }
+    },
+
+    // Exporting raw module
+    babel: {
+      dist: {
+        files: {
+          'dist/dom-observer.js': 'src/dom-observer.js'
         }
       }
     },
@@ -56,7 +65,7 @@ module.exports = function (grunt) {
           sourceMap: false
         },
         files: {
-          'dist/dom-observer.min.js': ['dist/dom-observer.js']
+          'dist/dom-observer.min.js': ['dist/dom-observer.min.js']
         }
       }
     },
@@ -92,7 +101,7 @@ module.exports = function (grunt) {
 
   // Register custom tasks
   grunt.registerTask('lint', ['eslint']);
-  grunt.registerTask('compile', ['browserify:lib']);
+  grunt.registerTask('compile', ['babel', 'browserify:standalone']);
   grunt.registerTask('test', ['mochify:local']);
   grunt.registerTask('minify', ['uglify']);
   grunt.registerTask('build', [
