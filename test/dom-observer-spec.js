@@ -34,10 +34,6 @@ describe('dom-observer', function test() {
       expect(myObserver).itself.to.respondTo('andObserve');
     });
 
-    it('should expose changeCallback', () => {
-      expect(myObserver).itself.to.respondTo('changeCallback');
-    });
-
     it('should expose takeRecords', () => {
       expect(myObserver).itself.to.respondTo('takeRecords');
     });
@@ -236,16 +232,11 @@ describe('dom-observer', function test() {
     });
   });
 
-  describe('changeCallback', () => {
-    it('should return self', () => {
-      myObserver = observer(myElement, mySpy, { attributes: true });
-      expect(myObserver.changeCallback(() => {})).to.be.equal(myObserver);
-    });
-
-    it('should report changes to the new callback', (done) => {
+  describe('callback getter and setter', () => {
+    it('should report changes to the new callback when setting a new one', (done) => {
       const testFunc = () => { return; };
       myObserver = observer(myElement, testFunc, { attributes: true });
-      myObserver.changeCallback(mySpy);
+      myObserver.callback = mySpy;
       document.body.setAttribute('test', 'test2');
       setTimeout(() => {
         if (mySpy.called) {
@@ -254,6 +245,12 @@ describe('dom-observer', function test() {
           throw new Error('Not reporting attribute change');
         }
       }, 100);
+    });
+
+    it('should get the current callback via the getter', () => {
+      const testFunc = () => { return; };
+      myObserver = observer(myElement, testFunc, { attributes: true });
+      expect(myObserver.callback).to.eql(testFunc);
     });
   });
 

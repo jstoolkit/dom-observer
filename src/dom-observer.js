@@ -44,15 +44,7 @@ export default (target, callback, options, lastChange) => {
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
 
-  let _callback = callback;
-
-  function getCallback() {
-    return _callback;
-  }
-
-  function setCallback(fn) {
-    _callback = fn;
-  }
+  let currentCallback = callback;
 
   /**
    * Handle MutationObserver mutations
@@ -63,9 +55,9 @@ export default (target, callback, options, lastChange) => {
    */
   function mutationHandler(mutations) {
     if (lastChange) {
-      getCallback()(mutations.pop());
+      currentCallback(mutations.pop());
     } else {
-      getCallback()(mutations);
+      currentCallback(mutations);
     }
   }
 
@@ -149,14 +141,17 @@ export default (target, callback, options, lastChange) => {
        * @returns {DomObserver} self - The current instance of dom-observer
        * @example <caption>Change the function that handle the changes</caption>
        * var myNewFunc = function(mutations) { console.log('YAY', mutations); }
-       * myObserver.changeCallback(myNewFunc);
+       * myObserver.callback = myNewFunc;
        * @returns {DomObserver} self - The current instance of dom-observer
        * @access public
-       * @since 0.1.0
+       * @since 1.0.0
        */
-      changeCallback: (fn) => {
-        setCallback(fn);
+      set callback(fn) {
+        currentCallback = fn;
         return self;
+      },
+      get callback() {
+        return currentCallback;
       },
       /**
        * Expose MutationObserver's takeRecords method
