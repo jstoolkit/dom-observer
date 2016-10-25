@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/leafui/dom-observer"
+    "url": "https://github.com/jstoolkit/dom-observer"
   },
   "bugs": {
-    "url": "https://github.com/leafui/dom-observer/issues"
+    "url": "https://github.com/jstoolkit/dom-observer/issues"
   },
   "license": "MIT",
   "main": "dist/dom-observer.js",
