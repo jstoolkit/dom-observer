@@ -49,15 +49,15 @@ export default (target, callback, options, lastChange) => {
   /**
    * Handle MutationObserver mutations
    * @function
-   * @param {MutationRecord[]} mutations - The mutations
+   * @param {MutationRecord[]} _mutations - The mutations
    * @access private
    * @since 0.1.0
    */
-  function mutationHandler(mutations) {
+  function mutationHandler(_mutations) {
     if (lastChange) {
-      currentCallback(mutations.pop());
+      currentCallback(_mutations.pop());
     } else {
-      currentCallback(mutations);
+      currentCallback(_mutations);
     }
   }
 
@@ -146,8 +146,8 @@ export default (target, callback, options, lastChange) => {
        * @access public
        * @since 1.0.0
        */
-      set callback(fn) {
-        currentCallback = fn;
+      set callback(_fn) {
+        currentCallback = _fn;
         return self;
       },
       get callback() {
