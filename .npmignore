@@ -11,4 +11,5 @@ demo
 banner.txt
 circle.yml
 karma.conf.js
+tests.webpack.js
 bower.json
