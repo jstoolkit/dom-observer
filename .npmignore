@@ -3,6 +3,7 @@ Thumbs.db
 test
 docs
 demo
+coverage
 .gitattributes
 .gitignore
 .editorconfig

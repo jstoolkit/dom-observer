@@ -7,3 +7,6 @@ node_modules
 
 # Ignore npm files
 npm-debug.log
+
+# Ignore coverage report
+coverage

@@ -16,7 +16,8 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-sinon',
-      'karma-webpack',
+      'karma-coverage',
+      'karma-webpack'
     ],
 
     // list of files / patterns to load in the browser
@@ -36,6 +37,13 @@ module.exports = function(config) {
     webpack: {
       devtool: 'inline-source-map',
       module: {
+        preLoaders: [
+          {
+            test: /\.js$/,
+            exclude: /(test|node_modules)\//,
+            loader: 'isparta-loader'
+          }
+        ],
         loaders: [
           {
             test: /\.js$/,
@@ -50,10 +58,29 @@ module.exports = function(config) {
       noInfo: true
     },
 
+    coverageReporter: {
+      reporters: [
+        {
+          type: 'lcovonly',
+          dir: 'coverage/',
+          subdir: '.',
+          file: 'lcov.info'
+        },
+        {
+          type: 'html',
+          dir: 'coverage/',
+          file: 'coverage.html'
+        },
+        {
+          type: 'text-summary'
+        }
+      ]
+    },
+
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
 
     // web server port
