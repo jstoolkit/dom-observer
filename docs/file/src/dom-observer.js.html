@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/dom-observer.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/jstoolkit/dom-observer" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-makeObserver">makeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MutationObserver">MutationObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MutationObserverInit">MutationObserverInit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MutationRecord">MutationRecord</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/dom-observer.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * dom-observer v1.0.0
+ * https://github.com/jstoolkit/dom-observer
+ * @license MIT LICENSE
+ * @author Matheus R. Kautzmann
+ */
+
+/**
+ * The MutationObserver object
+ * @typedef {Object} MutationObserver
+ * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
+ */
+
+/**
+ * The MutationObserverInit object to specify the observer config
+ * @typedef {Object} MutationObserverInit
+ * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
+ */
+
+/**
+ * The MutationRecord object that states the changes made in the DOM
+ * @typedef {Object} MutationRecord
+ * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
+ */
+
+ /**
+  * The callback used to report mutations
+  * @callback changeCallback
+  * @param {MutationRecord[]|MutationRecord} mutations - Report array of changes
+  * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
+  */
+
+/**
+ * Instantiate dom-observer
+ * @param {HTMLElement} target - The element to observe
+ * @param {changeCallback} callback - The function that will receive the reports
+ * @param {MutationObserverInit} [options] - The object with the observer config
+ * @param {Object} [options={}] - Object containing onlyFirstChange and onlyLastChange
+ * @access public
+ * @exports dom-observer
+ * @example &lt;caption&gt;Instantiates an observer for all elements in body&lt;/caption&gt;
+ * var observer = require(&apos;dom-observer&apos;);
+ * @returns {DomObserver} self - The newly created instance of DomObserver
+ * var myObserver = observer(document.body, myCallback, { subtree: true });
+ * @since 0.1.0
+ */
+const makeObserver = (target, callback, options = {}) =&gt; {
+  const { onlyLastChange = false, onlyFirstChange = false } = options;
+  // Bring prefixed MutationObserver for older Chrome/Safari and Firefox
+  // TODO: REMOVE THIS VARIABLE WHEN POSSIBLE
+  const MutationObserver = window.MutationObserver ||
+                           window.WebKitMutationObserver ||
+                           window.MozMutationObserver;
+
+  let self;
+  let currentCallback = callback;
+
+  /**
+   * Handle MutationObserver mutations
+   * @function
+   * @param {MutationRecord[]} _mutations - The mutations
+   * @access private
+   * @since 0.1.0
+   */
+  const mutationHandler = (_mutations) =&gt; {
+    if (onlyFirstChange) {
+      self.wipe();
+      self.disconnect();
+      return currentCallback(_mutations);
+    }
+    if (onlyLastChange) return currentCallback(_mutations.pop());
+    return currentCallback(_mutations);
+  };
+
+  /**
+   * The inner MutationObserver used to watch for mutations
+   * @access private
+   * @type MutationObserver
+   * @const
+   * @since 0.1.0
+   */
+  const observer = new MutationObserver(mutationHandler);
+
+  /**
+   * Spawn a new observer with the specified config
+   * @function
+   * @param {HTMLElement} _target - The element to observe
+   * @param {MutationObserverInit} [options] - The config to respect
+   * @access private
+   * @since 0.1.0
+   */
+  function observe(_target, _options) {
+    const config = _options;
+    const { attributes, childList, characterData } = config;
+    if (!(attributes || childList || characterData)) {
+      config.attributes = true;
+      config.childList = true;
+      config.characterData = true;
+    }
+    if (!(_target instanceof HTMLElement)) {
+      throw new Error(&apos;You must set a target element!&apos;);
+    }
+    if (currentCallback) {
+      observer.observe(_target, config);
+    }
+  }
+
+  /**
+   * The instance of DomObserver with the public API
+   * @const
+   * @access public
+   * @since 0.1.0
+   */
+  self = (() =&gt; {
+    observe(target, options);
+    return {
+      /**
+       * Add a target to the current observer
+       * @function
+       * @param {HTMLElement} _target - The element to observe
+       * @example &lt;caption&gt;Add a new element to an existent observer&lt;/caption&gt;
+       * var myElement = document.querySelector(&apos;#awesomeElement&apos;);
+       * myObserver.addTarget(myElement);
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @access public
+       * @since 0.1.0
+       */
+      addTarget: (_target) =&gt; {
+        observe(_target, options);
+        return self;
+      },
+      /**
+       * Add a new target and config to the current observer
+       * @function
+       * @param {HTMLElement} _target - The element to observe
+       * @param {MutationObserverInit} _options - The config to respect
+       * @example &lt;caption&gt;Add a new element and config to an observer&lt;/caption&gt;
+       * var myElement = document.querySelector(&apos;#awesomeElement&apos;);
+       * myObserver.andObserve(myElement, { childList: true });
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @access public
+       * @since 0.1.0
+       */
+      andObserve: (_target, _options) =&gt; {
+        observe(_target, _options);
+        return self;
+      },
+      /**
+       * Change the function to be called when reporting changes
+       * @function
+       * @param {Function} fn - The new callback to use
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @example &lt;caption&gt;Change the function that handle the changes&lt;/caption&gt;
+       * var myNewFunc = function(mutations) { console.log(&apos;YAY&apos;, mutations); }
+       * myObserver.callback = myNewFunc;
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @access public
+       * @since 1.0.0
+       */
+      set callback(_fn) {
+        currentCallback = _fn;
+        return self;
+      },
+      get callback() {
+        return currentCallback;
+      },
+      /**
+       * Expose MutationObserver&apos;s takeRecords method
+       * @function
+       * @example &lt;caption&gt;Taking records&lt;/caption&gt;
+       * myObserver.takeRecords(); // Now do something with the info.
+       * @returns {MutationRecord[]} The array of mutations
+       * @access public
+       * @since 0.1.0
+       */
+      takeRecords: () =&gt; observer.takeRecords(),
+      /**
+       * Clean the MutationObserver record pool and return this instance
+       * @function
+       * @example &lt;caption&gt;Wiping the reports&lt;/caption&gt;
+       * myObserver.wipe(); // OK, clean.
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @access public
+       * @since 0.1.0
+       */
+      wipe: () =&gt; {
+        observer.takeRecords();
+        return self;
+      },
+      /**
+       * Remove all previous observer configuration
+       * @function
+       * @example &lt;caption&gt;Stopping all reporters&lt;/caption&gt;
+       * myObserver.disconnect(); // No more change reports
+       * @returns {DomObserver} self - The current instance of dom-observer
+       * @access public
+       * @since 0.1.0
+       */
+      disconnect: () =&gt; {
+        observer.disconnect();
+        return self;
+      },
+    };
+  })();
+
+  return self;
+};
+
+export default makeObserver;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
