@@ -1,5 +1,7 @@
 {
   "presets": ["es2015"],
-  "plugins": ["add-module-exports"],
-  "only": ["src/dom-observer.js", "test/dom-observer-spec.js"]
+  "plugins": [
+    "babel-plugin-add-module-exports",
+    "babel-plugin-transform-es2015-modules-umd"
+  ]
 }
