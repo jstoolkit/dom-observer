@@ -19,7 +19,7 @@
  /**
   * The callback used to report mutations
   * @callback changeCallback
-  * @param {MutationRecord[]|MutationRecord} mutations - Report array of changes, but if lastChange is set to true it will report only the last change.
+  * @param {MutationRecord[]|MutationRecord} mutations - Report array of changes
   * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
   */
 
@@ -28,22 +28,24 @@
  * @param {HTMLElement} target - The element to observe
  * @param {changeCallback} callback - The function that will receive the reports
  * @param {MutationObserverInit} [options] - The object with the observer config
- * @param {Boolean} [lastChange=false] - Whether or not to return only the last change
+ * @param {Object} [options={}] - Object containing onlyFirstChange and onlyLastChange
  * @access public
  * @exports dom-observer
  * @example <caption>Instantiates an observer for all elements in body</caption>
  * var observer = require('dom-observer');
  * @returns {DomObserver} self - The newly created instance of DomObserver
- * var myObserver = observer(document.body, { subtree: true }, myCallback);
+ * var myObserver = observer(document.body, myCallback, { subtree: true });
  * @since 0.1.0
  */
-export default (target, callback, options, lastChange) => {
+const makeObserver = (target, callback, options = {}) => {
+  const { onlyLastChange = false, onlyFirstChange = false } = options;
   // Bring prefixed MutationObserver for older Chrome/Safari and Firefox
   // TODO: REMOVE THIS VARIABLE WHEN POSSIBLE
   const MutationObserver = window.MutationObserver ||
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
 
+  let self;
   let currentCallback = callback;
 
   /**
@@ -53,13 +55,15 @@ export default (target, callback, options, lastChange) => {
    * @access private
    * @since 0.1.0
    */
-  function mutationHandler(_mutations) {
-    if (lastChange) {
-      currentCallback(_mutations.pop());
-    } else {
-      currentCallback(_mutations);
+  const mutationHandler = (_mutations) => {
+    if (onlyFirstChange) {
+      self.wipe();
+      self.disconnect();
+      return currentCallback(_mutations);
     }
-  }
+    if (onlyLastChange) return currentCallback(_mutations.pop());
+    return currentCallback(_mutations);
+  };
 
   /**
    * The inner MutationObserver used to watch for mutations
@@ -79,7 +83,7 @@ export default (target, callback, options, lastChange) => {
    * @since 0.1.0
    */
   function observe(_target, _options) {
-    const config = _options || {};
+    const config = _options;
     const { attributes, childList, characterData } = config;
     if (!(attributes || childList || characterData)) {
       config.attributes = true;
@@ -89,7 +93,7 @@ export default (target, callback, options, lastChange) => {
     if (!(_target instanceof HTMLElement)) {
       throw new Error('You must set a target element!');
     }
-    if (callback) {
+    if (currentCallback) {
       observer.observe(_target, config);
     }
   }
@@ -100,7 +104,7 @@ export default (target, callback, options, lastChange) => {
    * @access public
    * @since 0.1.0
    */
-  const self = (() => {
+  self = (() => {
     observe(target, options);
     return {
       /**
@@ -162,7 +166,7 @@ export default (target, callback, options, lastChange) => {
        * @access public
        * @since 0.1.0
        */
-      takeRecords: () => { return observer.takeRecords(); },
+      takeRecords: () => observer.takeRecords(),
       /**
        * Clean the MutationObserver record pool and return this instance
        * @function
@@ -194,3 +198,5 @@ export default (target, callback, options, lastChange) => {
 
   return self;
 };
+
+export default makeObserver;

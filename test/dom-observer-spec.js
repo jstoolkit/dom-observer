@@ -1,8 +1,4 @@
-// PhantomJS prior to 2.0 doesn't support MutationObserver
-import MutationObserverShim from 'mutationobserver-shim';
-import { expect } from 'chai';
-import sinon from 'sinon';
-import observer from '../src/dom-observer.js';
+import observer from '../src/dom-observer';
 
 let myObserver;
 let myElement;
@@ -66,9 +62,7 @@ describe('dom-observer', function test() {
       });
 
       it('should not accept initiating without a target', () => {
-        const createObserver = () => {
-          return observer(false, mySpy, { attributes: true });
-        };
+        const createObserver = () => observer(false, mySpy, { attributes: true });
         expect(createObserver).to.throw(Error);
       });
 
@@ -153,11 +147,12 @@ describe('dom-observer', function test() {
         }, 100);
       });
 
-      it('should report the final change when lastChange is truthy', (done) => {
+      it('should report the final change when onlyLastChange is truthy', (done) => {
         myObserver = observer(myElement, mySpy, {
           attributes: true,
           childList: true,
-        }, true);
+          onlyLastChange: true,
+        });
         document.body.setAttribute('test', 'test');
         document.body.appendChild(document.createElement('h1'));
         setTimeout(() => {
@@ -165,6 +160,23 @@ describe('dom-observer', function test() {
             done();
           } else {
             throw new Error('Should report only last changes');
+          }
+        }, 100);
+      });
+
+      it('should report and disconnect when onlyFirstChange is truthy', (done) => {
+        myObserver = observer(myElement, mySpy, {
+          attributes: true,
+          childList: true,
+          onlyFirstChange: true,
+        });
+        document.body.setAttribute('test', 'test');
+        document.body.appendChild(document.createElement('h1'));
+        setTimeout(() => {
+          if (mySpy.args[0][1] === undefined) {
+            done();
+          } else {
+            throw new Error('Should report only first changes and disconnect');
           }
         }, 100);
       });
@@ -234,7 +246,7 @@ describe('dom-observer', function test() {
 
   describe('callback getter and setter', () => {
     it('should report changes to the new callback when setting a new one', (done) => {
-      const testFunc = () => { return; };
+      const testFunc = () => null;
       myObserver = observer(myElement, testFunc, { attributes: true });
       myObserver.callback = mySpy;
       document.body.setAttribute('test', 'test2');
@@ -248,7 +260,7 @@ describe('dom-observer', function test() {
     });
 
     it('should get the current callback via the getter', () => {
-      const testFunc = () => { return; };
+      const testFunc = () => null;
       myObserver = observer(myElement, testFunc, { attributes: true });
       expect(myObserver.callback).to.eql(testFunc);
     });
