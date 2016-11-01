@@ -1,10 +1,16 @@
 {
   "env": {
+    "browser": true,
     "mocha": true
   },
-  "extends": "airbnb/base",
+  "globals": {
+    "expect": true,
+    "sinon": true
+  },
+  "extends": "airbnb-base",
   "rules": {
     "no-unused-vars": 0,
-    "no-unused-expressions": 0
+    "no-unused-expressions": 0,
+    "import/no-extraneous-dependencies": "off"
   }
 }
