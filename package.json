@@ -2,7 +2,7 @@
   "name": "dom-observer",
   "description": "An abstraction for Mutation Observer with some extra features",
   "version": "0.1.1",
-  "homepage": "https://github.com/leafui/dom-observer",
+  "homepage": "https://github.com/jstoolkit/dom-observer",
   "author": {
     "name": "Matheus Kautzmann"
   },
@@ -54,7 +54,6 @@
     "mutation observer",
     "dom",
     "observer",
-    "browser",
-    "browserify"
+    "browser"
   ]
 }
