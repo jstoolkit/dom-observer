@@ -4,7 +4,8 @@
   "version": "0.1.1",
   "homepage": "https://github.com/jstoolkit/dom-observer",
   "author": {
-    "name": "Matheus Kautzmann"
+    "name": "Matheus Kautzmann",
+    "email": "mkvchain@gmail.com"
   },
   "repository": {
     "type": "git",
