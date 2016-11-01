@@ -1,4 +1,11 @@
 /**
+ * dom-observer v1.0.0
+ * https://github.com/jstoolkit/dom-observer
+ * @license MIT LICENSE
+ * @author Matheus R. Kautzmann
+ */
+
+/**
  * The MutationObserver object
  * @typedef {Object} MutationObserver
  * @see https://developer.mozilla.org/docs/Web/API/MutationObserver
