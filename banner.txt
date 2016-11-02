@@ -1,5 +1,0 @@
-/*!
- * <%=pkg.name%> v<%=pkg.version%>
- * <%=pkg.repository.url%>
- * <%=pkg.license%> LICENSE © <%=pkg.author.name%>
-*/
