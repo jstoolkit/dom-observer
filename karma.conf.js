@@ -41,6 +41,7 @@ module.exports = function(config) {
     },
     sl_android: {
       base: 'SauceLabs',
+      browserName: 'Browser',
       appiumVersion: '1.6.0',
       deviceName: 'Android Emulator',
       deviceOrientation: 'portrait',
