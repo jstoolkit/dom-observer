@@ -3,7 +3,7 @@
 [![Build]](https://circleci.com/gh/jstoolkit/dom-observer/tree/master) [![SemVer]](http://semver.org/)
 [![License]](LICENSE)
 
-[![Tests](https://saucelabs.com/browser-matrix/dom-observer.svg)](https://saucelabs.com/u/dom-observer)
+[![Tests](https://saucelabs.com/browser-matrix/dom-observer-oss.svg)](https://saucelabs.com/u/dom-observer-oss)
 
 An abstraction for [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) with some extra features in ~1kb gzipped.
 
