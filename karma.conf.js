@@ -1,12 +1,66 @@
 module.exports = function(config) {
+  var sauceBrowsers = {
+    sl_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 10',
+      version: '54.0'
+    },
+    sl_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.11',
+      version: '10.0'
+    },
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      platform: 'Windows 10',
+      version: '49.0'
+    },
+    sl_ms_edge: {
+      base: 'SauceLabs',
+      browserName: 'MicrosoftEdge',
+      platform: 'Windows 10',
+      version: '14.14393'
+    },
+    sl_ie_11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 10',
+      version: '11.103'
+    },
+    sl_ios: {
+      base: 'SauceLabs',
+      browserName: 'Safari',
+      appiumVersion: '1.6.0',
+      deviceName: 'iPhone Simulator',
+      deviceOrientation: 'portrait',
+      platformName: 'iOS',
+      platformVersion: '10.0'
+    },
+    sl_android: {
+      base: 'SauceLabs',
+      appiumVersion: '1.6.0',
+      deviceName: 'Android Emulator',
+      deviceOrientation: 'portrait',
+      platformVersion: '5.1',
+      platformName: 'Android'
+    }
+  }
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS']
+    // register browsers
+    customLaunchers: sauceBrowsers,
+    browsers: process.env.CI ? Object.keys(sauceBrowsers) : ['PhantomJS'],
+
+    // SauceLabs config for CI
+    sauceLabs: {
+      testName: 'dom-observer suite',
+    },
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -81,9 +135,8 @@ module.exports = function(config) {
     },
 
     // test results reporter to use
-    // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: process.env.CI ? ['progress', 'saucelabs', 'coverage'] : ['progress', 'coverage'],
 
 
     // web server port
