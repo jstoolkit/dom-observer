@@ -12,7 +12,7 @@ ratings:
   paths:
   - src/**
   - test/**
-  - **.js
+  - "**.js"
 exclude_paths:
 - test/**/*
 - dist/**/*
