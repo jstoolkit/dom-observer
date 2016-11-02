@@ -69,6 +69,7 @@ module.exports = function(config) {
     // Registered plugins
     plugins: [
       'karma-phantomjs-launcher',
+      'karma-sauce-launcher',
       'karma-sourcemap-loader',
       'karma-mocha',
       'karma-chai',
