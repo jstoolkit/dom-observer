@@ -23,8 +23,7 @@
     "docs": "esdoc -c esdoc.json",
     "package": "babel src -d dist && uglifyjs dist/dom-observer.js --comments -o dist/dom-observer.min.js",
     "build": "npm test && npm run package && npm run docs",
-    "build-ci": "npm run build",
-    "prepublish": "npm run build"
+    "build-ci": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "~6.18.0",
