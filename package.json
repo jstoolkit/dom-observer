@@ -1,7 +1,7 @@
 {
   "name": "dom-observer",
   "description": "An abstraction for Mutation Observer with some extra features",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/jstoolkit/dom-observer",
   "author": {
     "name": "Matheus Kautzmann",
