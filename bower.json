@@ -1,8 +1,8 @@
 {
   "name": "dom-observer",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "authors": [
-    "Matheus Kautzmann <matheus@fluidrobot.com>"
+    "Matheus Kautzmann <mkvchain@gmail.com>"
   ],
   "description": "An abstraction for Mutation Observer with some extra features",
   "main": [
@@ -12,19 +12,20 @@
     "mutation observer",
     "dom",
     "observer",
-    "browser",
-    "browserify"
+    "browser"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/leafui/dom-observer",
+  "homepage": "https://github.com/jstoolkit/dom-observer",
   "ignore": [
     "**/.*",
-    "CONTRIBUTING.md",
-    "Gruntfile.js",
+    "coverage",
     "node_modules",
     "circle.yml",
     "package.json",
     "test",
+    "tests.webpack.js",
+    "karma.config.js",
+    "esdoc.json",
     "docs",
     "demo"
   ]
