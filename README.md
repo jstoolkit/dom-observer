@@ -1,9 +1,9 @@
 # dom-observer
 
-[![Build]](https://circleci.com/gh/leafui/dom-observer/tree/master) [![SemVer]](http://semver.org/)
+[![Build]](https://circleci.com/gh/jstoolkit/dom-observer/tree/master) [![SemVer]](http://semver.org/)
 [![License]](LICENSE)
 
-[![Tests](https://saucelabs.com/browser-matrix/leafui.svg)](https://saucelabs.com/u/leafui)
+[![Tests](https://saucelabs.com/browser-matrix/dom-observer.svg)](https://saucelabs.com/u/dom-observer)
 
 An abstraction for [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) with some extra features in ~1kb gzipped.
 
@@ -25,14 +25,14 @@ As usual most package managers are supported.
 
 ### Direct Download
 
-1. [Download ZIP](https://github.com/leafui/dom-observer/archive/v0.1.0.zip)
+1. [Download ZIP](https://github.com/jstoolkit/dom-observer/archive/v0.1.0.zip)
 2. Unzip
 3. Grab the JS in the `dist` folder.
 4. Profit!
 
 ### CDN
 
-[RawGit](https://cdn.rawgit.com/leafui/dom-observer/v0.1.0/dist/dom-observer.min.js)
+[RawGit](https://cdn.rawgit.com/jstoolkit/dom-observer/v0.1.0/dist/dom-observer.min.js)
 
 ## Basic Usage
 
@@ -144,7 +144,7 @@ const myObserver = observe(myTarget, handleMutations)
 
 ## Docs
 
-[We are working to put them in the wiki](https://github.com/leafui/dom-observer/issues/2)
+[We are working to put them in the wiki](https://github.com/jstoolkit/dom-observer/issues/2)
 
 As of now please check the `docs` folder. It works best if you clone the project and use your local browser.
 
@@ -152,6 +152,6 @@ As of now please check the `docs` folder. It works best if you clone the project
 
 [MIT License](LICENSE)
 
-[Build]: https://img.shields.io/circleci/project/leafui/dom-observer/master.svg
+[Build]: https://img.shields.io/circleci/project/jstoolkit/dom-observer/master.svg
 [SemVer]: https://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
-[License]: https://img.shields.io/github/license/leafui/dom-observer.svg
+[License]: https://img.shields.io/github/license/jstoolkit/dom-observer.svg
