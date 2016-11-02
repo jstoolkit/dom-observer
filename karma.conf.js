@@ -29,24 +29,6 @@ module.exports = function(config) {
       browserName: 'internet explorer',
       platform: 'Windows 10',
       version: '11.103'
-    },
-    sl_ios: {
-      base: 'SauceLabs',
-      browserName: 'Safari',
-      appiumVersion: '1.6.0',
-      deviceName: 'iPhone Simulator',
-      deviceOrientation: 'portrait',
-      platformName: 'iOS',
-      platformVersion: '10.0'
-    },
-    sl_android: {
-      base: 'SauceLabs',
-      browserName: 'Browser',
-      appiumVersion: '1.6.0',
-      deviceName: 'Android Emulator',
-      deviceOrientation: 'portrait',
-      platformVersion: '5.1',
-      platformName: 'Android'
     }
   }
   config.set({
