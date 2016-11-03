@@ -146,9 +146,9 @@ const myObserver = observe(myTarget, handleMutations)
 
 ## Docs
 
-[We are working to put them in the wiki](https://github.com/jstoolkit/dom-observer/issues/2)
+[Online Docs](https://doc.esdoc.org/github.com/jstoolkit/dom-observer/)
 
-As of now please check the `docs` folder. It works best if you clone the project and use your local browser.
+While developing the `npm run docs` script updates the local docs in the `docs` folder.
 
 ## License
 
