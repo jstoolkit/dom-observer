@@ -7,9 +7,9 @@
 
 [![Tests](https://saucelabs.com/browser-matrix/dom-observer-oss.svg)](https://saucelabs.com/u/dom-observer-oss)
 
-An abstraction for [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) with some extra features in ~1kb gzipped.
+An abstraction for [Mutation Observer](https://developer.mozilla.org/docs/Web/API/MutationObserver) with some extra features in ~1kb gzipped.
 
-Useful to observe an DOM element for changes without taking too much hit on performance, the [Mutation Observer](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver) technique is used by many libraries and frameworks.
+Useful to observe an DOM element for changes without taking too much hit on performance, the [Mutation Observer](https://developer.mozilla.org/docs/Web/API/MutationObserver) technique is used by many libraries and frameworks.
 
 This lib intention is to provide quick and simple access to the Mutation Observer features by abstracting the API into a simple function call and adding some handy methods.
 
@@ -81,9 +81,9 @@ Notice that with the lib we default to all 3 properties (attributes, childList a
 
 Of course you can specify to just observe attributes by setting it explicitly to true, then the lib will respect that.
 
-In fact, the observe function second argument is MutationObserverInit object. Meaning it will respect options like `subtree` or `attributeFilter` too. Please check the [MO docs](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver#MutationObserverInit) if you're lost.
+In fact, the observe function second argument is MutationObserverInit object. Meaning it will respect options like `subtree` or `attributeFilter` too. Please check the [MO docs](https://developer.mozilla.org/docs/Web/API/MutationObserver#MutationObserverInit) if you're lost.
 
-As you would expect the callback, in this case the `handleMutations` function, receives as first argument an array of [MutationRecord](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver#MutationRecord) so you can handle the DOM mutations as you please.
+As you would expect the callback, in this case the `handleMutations` function, receives as first argument an array of [MutationRecord](https://developer.mozilla.org/docs/Web/API/MutationObserver#MutationRecord) so you can handle the DOM mutations as you please.
 
 ### Passing options
 
