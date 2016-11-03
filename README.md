@@ -85,6 +85,62 @@ In fact, the observe function second argument is MutationObserverInit object. Me
 
 As you would expect the callback, in this case the `handleMutations` function, receives as first argument an array of [MutationRecord](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver#MutationRecord) so you can handle the DOM mutations as you please.
 
+### Passing options
+
+You can pass any option already specified in the MutationObserverInit object and two other special properties that you can use:
+
+#### onlyFirstChange
+
+It tells the `observer` to only send the first change to the `callback` and then unregister the observer.
+
+Example:
+
+```javascript
+// Importing ES module
+import observe from 'dom-observer';
+
+// Getting my target
+const target = document.body;
+
+// Registering the handler
+const mutationHandler = (mutations) => mutations.forEach(mutation, () => console.log(mutation));
+
+// Making my observer getting only the first mutation/change
+const myObserver = observe(target, mutationHandler, { onlyFirstChange: true });
+
+// Will trigger mutation = first mutation will be reported to the handler
+document.body.appendChild(document.createElement('div'));
+
+// Trigger a second mutation, will not be reported because the myObserver already unregistered
+document.body.appendChild(document.createElement('div'));
+```
+
+#### onlyLastChange
+
+Sometimes more than one mutation is filed in a render cycle, so you can get just the last one by setting this property.
+
+Example:
+
+```javascript
+// Importing ES module
+import observe from 'dom-observer';
+
+// Getting my target
+const target = document.body;
+
+// Registering the handler
+const mutationHandler = (mutations) => mutations.forEach(mutation, () => console.log(mutation));
+
+// Making my observer getting only the first mutation/change
+const myObserver = observe(target, mutationHandler, { onlyLastChange: true });
+
+// If the browser batches the mutations this mutation will not be reported
+document.body.appendChild(document.createElement('div'));
+
+// This mutation will be reported
+document.body.appendChild(document.createElement('div'));
+```
+
 ### Adding targets to the observer
 
 It's not recommended but you can add a new target to an existent observer with `addTarget`.
