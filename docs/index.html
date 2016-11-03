@@ -41,11 +41,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="dom-observer">dom-observer</h1>
-<p><a href="https://circleci.com/gh/leafui/dom-observer/tree/master"><img src="https://img.shields.io/circleci/project/leafui/dom-observer/master.svg" alt="Build"></a> <a href="http://semver.org/"><img src="https://img.shields.io/:semver-%E2%9C%93-brightgreen.svg" alt="SemVer"></a>
-<a href="LICENSE"><img src="https://img.shields.io/github/license/leafui/dom-observer.svg" alt="License"></a></p>
-<p><a href="https://saucelabs.com/u/leafui"><img src="https://saucelabs.com/browser-matrix/leafui.svg" alt="Tests"></a></p>
-<p>An abstraction for <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver">Mutation Observer</a> with some extra features in ~1kb gzipped.</p>
-<p>Useful to observe an DOM element for changes without taking too much hit on performance, the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver">Mutation Observer</a> technique is used by many libraries and frameworks.</p>
+<p><a href="https://circleci.com/gh/jstoolkit/dom-observer/tree/master"><img src="https://img.shields.io/circleci/project/jstoolkit/dom-observer/master.svg" alt="Build"></a>
+<a href="https://codeclimate.com/github/jstoolkit/dom-observer/coverage"><img src="https://codeclimate.com/github/jstoolkit/dom-observer/badges/coverage.svg" alt="TestCoverage"></a>
+<a href="http://semver.org/"><img src="https://img.shields.io/:semver-%E2%9C%93-brightgreen.svg" alt="SemVer"></a>
+<a href="LICENSE"><img src="https://img.shields.io/github/license/jstoolkit/dom-observer.svg" alt="License"></a></p>
+<p><a href="https://saucelabs.com/u/dom-observer-oss"><img src="https://saucelabs.com/browser-matrix/dom-observer-oss.svg" alt="Tests"></a></p>
+<p>An abstraction for <a href="https://developer.mozilla.org/docs/Web/API/MutationObserver">Mutation Observer</a> with some extra features in ~1kb gzipped.</p>
+<p>Useful to observe an DOM element for changes without taking too much hit on performance, the <a href="https://developer.mozilla.org/docs/Web/API/MutationObserver">Mutation Observer</a> technique is used by many libraries and frameworks.</p>
 <p>This lib intention is to provide quick and simple access to the Mutation Observer features by abstracting the API into a simple function call and adding some handy methods.</p>
 <h2 id="getting-started">Getting Started</h2>
 <p>As usual most package managers are supported.</p>
@@ -55,13 +57,13 @@
 <p><code>bower install dom-observer</code></p>
 <h3 id="direct-download">Direct Download</h3>
 <ol>
-<li><a href="https://github.com/leafui/dom-observer/archive/v0.1.0.zip">Download ZIP</a></li>
+<li><a href="https://github.com/jstoolkit/dom-observer/archive/v1.0.0.zip">Download ZIP</a></li>
 <li>Unzip</li>
 <li>Grab the JS in the <code>dist</code> folder.</li>
 <li>Profit!</li>
 </ol>
 <h3 id="cdn">CDN</h3>
-<p><a href="https://cdn.rawgit.com/leafui/dom-observer/v0.1.0/dist/dom-observer.min.js">RawGit</a></p>
+<p><a href="https://cdn.rawgit.com/jstoolkit/dom-observer/v1.0.0/dist/dom-observer.min.js">RawGit</a></p>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>It&apos;s really simple if you know how Mutation Observers work.</p>
 <p>This lib is designed to ease your life when dealing with MOs.</p>
@@ -96,8 +98,52 @@ myObserver.observe(myTarget, {
 </code></pre>
 <p>Notice that with the lib we default to all 3 properties (attributes, childList and characterData) true when you pass no object.</p>
 <p>Of course you can specify to just observe attributes by setting it explicitly to true, then the lib will respect that.</p>
-<p>In fact, the observe function second argument is MutationObserverInit object. Meaning it will respect options like <code>subtree</code> or <code>attributeFilter</code> too. Please check the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver#MutationObserverInit">MO docs</a> if you&apos;re lost.</p>
-<p>As you would expect the callback, in this case the <code>handleMutations</code> function, receives as first argument an array of <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver#MutationRecord">MutationRecord</a> so you can handle the DOM mutations as you please.</p>
+<p>In fact, the observe function second argument is MutationObserverInit object. Meaning it will respect options like <code>subtree</code> or <code>attributeFilter</code> too. Please check the <a href="https://developer.mozilla.org/docs/Web/API/MutationObserver#MutationObserverInit">MO docs</a> if you&apos;re lost.</p>
+<p>As you would expect the callback, in this case the <code>handleMutations</code> function, receives as first argument an array of <a href="https://developer.mozilla.org/docs/Web/API/MutationObserver#MutationRecord">MutationRecord</a> so you can handle the DOM mutations as you please.</p>
+<h3 id="passing-options">Passing options</h3>
+<p>You can pass any option already specified in the MutationObserverInit object and two other special properties that you can use:</p>
+<h4 id="onlyfirstchange">onlyFirstChange</h4>
+<p>It tells the <code>observer</code> to only send the first change to the <code>callback</code> and then unregister the observer.</p>
+<p>Example:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Importing ES module
+import observe from &apos;dom-observer&apos;;
+
+// Getting my target
+const target = document.body;
+
+// Registering the handler
+const mutationHandler = (mutations) =&gt; mutations.forEach(mutation, () =&gt; console.log(mutation));
+
+// Making my observer getting only the first mutation/change
+const myObserver = observe(target, mutationHandler, { onlyFirstChange: true });
+
+// Will trigger mutation = first mutation will be reported to the handler
+document.body.appendChild(document.createElement(&apos;div&apos;));
+
+// Trigger a second mutation, will not be reported because the myObserver already unregistered
+document.body.appendChild(document.createElement(&apos;div&apos;));</code>
+</code></pre>
+<h4 id="onlylastchange">onlyLastChange</h4>
+<p>Sometimes more than one mutation is filed in a render cycle, so you can get just the last one by setting this property.</p>
+<p>Example:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Importing ES module
+import observe from &apos;dom-observer&apos;;
+
+// Getting my target
+const target = document.body;
+
+// Registering the handler
+const mutationHandler = (mutations) =&gt; mutations.forEach(mutation, () =&gt; console.log(mutation));
+
+// Making my observer getting only the first mutation/change
+const myObserver = observe(target, mutationHandler, { onlyLastChange: true });
+
+// If the browser batches the mutations this mutation will not be reported
+document.body.appendChild(document.createElement(&apos;div&apos;));
+
+// This mutation will be reported
+document.body.appendChild(document.createElement(&apos;div&apos;));</code>
+</code></pre>
 <h3 id="adding-targets-to-the-observer">Adding targets to the observer</h3>
 <p>It&apos;s not recommended but you can add a new target to an existent observer with <code>addTarget</code>.</p>
 <p>The lib allows you to add a new target while maintaining the config from the constructor.</p>
@@ -133,8 +179,8 @@ myObserver.changeCallback(myNewFunc);</code>
   });</code>
 </code></pre>
 <h2 id="docs">Docs</h2>
-<p><a href="https://github.com/leafui/dom-observer/issues/2">We are working to put them in the wiki</a></p>
-<p>As of now please check the <code>docs</code> folder. It works best if you clone the project and use your local browser.</p>
+<p><a href="https://doc.esdoc.org/github.com/jstoolkit/dom-observer/">Online Docs</a></p>
+<p>While developing the <code>npm run docs</code> script updates the local docs in the <code>docs</code> folder.</p>
 <h2 id="license">License</h2>
 <p><a href="LICENSE">MIT License</a></p>
 </div>

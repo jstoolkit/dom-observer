@@ -23,8 +23,7 @@
     "docs": "esdoc -c esdoc.json",
     "package": "babel src -d dist && uglifyjs dist/dom-observer.js --comments -o dist/dom-observer.min.js",
     "build": "npm test && npm run package && npm run docs",
-    "build-ci": "npm run build",
-    "prepublish": "npm run build"
+    "build-ci": "npm run build && codeclimate-test-reporter < coverage/lcov.info"
   },
   "devDependencies": {
     "babel-cli": "~6.18.0",
@@ -34,6 +33,7 @@
     "babel-plugin-transform-es2015-modules-umd": "~6.18.0",
     "babel-preset-es2015": "~6.18.0",
     "chai": "~3.5.0",
+    "codeclimate-test-reporter": "~0.4.0",
     "esdoc": "~0.4.8",
     "eslint": "~3.9.0",
     "eslint-config-airbnb-base": "~9.0.0",
@@ -44,6 +44,7 @@
     "karma-coverage": "~1.1.1",
     "karma-mocha": "~1.2.0",
     "karma-phantomjs-launcher": "~1.0.2",
+    "karma-sauce-launcher": "~1.1.0",
     "karma-sinon": "~1.0.5",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.8.0",
