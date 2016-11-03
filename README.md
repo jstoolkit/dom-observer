@@ -27,14 +27,14 @@ As usual most package managers are supported.
 
 ### Direct Download
 
-1. [Download ZIP](https://github.com/jstoolkit/dom-observer/archive/v0.1.0.zip)
+1. [Download ZIP](https://github.com/jstoolkit/dom-observer/archive/v1.0.0.zip)
 2. Unzip
 3. Grab the JS in the `dist` folder.
 4. Profit!
 
 ### CDN
 
-[RawGit](https://cdn.rawgit.com/jstoolkit/dom-observer/v0.1.0/dist/dom-observer.min.js)
+[RawGit](https://cdn.rawgit.com/jstoolkit/dom-observer/v1.0.0/dist/dom-observer.min.js)
 
 ## Basic Usage
 
