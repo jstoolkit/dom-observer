@@ -1,6 +1,8 @@
 # dom-observer
 
-[![Build]](https://circleci.com/gh/jstoolkit/dom-observer/tree/master) [![SemVer]](http://semver.org/)
+[![Build]](https://circleci.com/gh/jstoolkit/dom-observer/tree/master)
+[![TestCoverage]](https://codeclimate.com/github/jstoolkit/dom-observer/coverage)
+[![SemVer]](http://semver.org/)
 [![License]](LICENSE)
 
 [![Tests](https://saucelabs.com/browser-matrix/dom-observer-oss.svg)](https://saucelabs.com/u/dom-observer-oss)
@@ -153,5 +155,6 @@ As of now please check the `docs` folder. It works best if you clone the project
 [MIT License](LICENSE)
 
 [Build]: https://img.shields.io/circleci/project/jstoolkit/dom-observer/master.svg
+[TestCoverage]: https://codeclimate.com/github/jstoolkit/dom-observer/badges/coverage.svg
 [SemVer]: https://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
 [License]: https://img.shields.io/github/license/jstoolkit/dom-observer.svg
