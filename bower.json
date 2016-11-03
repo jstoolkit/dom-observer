@@ -6,7 +6,7 @@
   ],
   "description": "An abstraction for Mutation Observer with some extra features",
   "main": [
-    "dist/dom-observer.min.js"
+    "dist/dom-observer.js"
   ],
   "keywords": [
     "mutation observer",
